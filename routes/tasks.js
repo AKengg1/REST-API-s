@@ -1,7 +1,7 @@
 import express from "express";
 import { tasks, getNextId } from "../data/tasks.js";
-import {appError} from "../middlewares/errorHandler.js" 
-import {validateFields} from "../middlewares/validate.js"
+import { appError } from "../middlewares/errorHandler.js";
+import { validateFields } from "../middlewares/validate.js";
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   const task = tasks.find((e) => e.id === Number(id));
-  if (!tasks) return res.status(404).json({ error: "Task not found" });
+  if (!tasks) return next(new appError(404,"Task not found"));
   res.status(200).json(task);
 });
 
