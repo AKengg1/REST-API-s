@@ -14,25 +14,23 @@ router.get("/", (req, res) => {
   res.json(tasks);
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
   const { id } = req.params;
   const task = tasks.find((e) => e.id === Number(id));
-  if (!tasks) return next(new appError(404,"Task not found"));
+  if (!task) return next(new appError(404, "Task not found"));
   res.status(200).json(task);
 });
 
-router.post("/", (req, res) => {
+router.post("/", validateFields(["title", "userId"]), (req, res) => {
   const { title, userId } = req.body;
-  if (!title || !userId)
-    return res.status(400).json({ error: "userid and title required" });
   const task = { id: getNextId(), title, done: false, userId };
   tasks.push(task);
   res.json(task);
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", (req, res, next) => {
   const task = tasks.find((e) => e.id === Number(req.params.id));
-  if (!task) return req.status(404).json({ error: "task not found" });
+  if (!task) return next(new appError(404, "task not found"));
   else {
     const { title, done } = req.body;
     if (title !== undefined) task.title = title;
@@ -41,10 +39,9 @@ router.put("/:id", (req, res) => {
   }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res, next) => {
   const taskIndex = tasks.findIndex((e) => e.id === Number(req.params.id));
-  if (taskIndex === -1)
-    return req.status(404).json({ error: "task not found" });
+  if (taskIndex === -1) return next(new appError(404, "task not found"));
   const deleted = tasks.splice(taskIndex, 1);
   res.json({ deleted: deleted[0] });
 });

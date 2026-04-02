@@ -5,13 +5,13 @@ export class appError extends Error {
   }
 }
 
-export const errorHnadler = (error, req, res, next) => {
-  console.error(`[ERROR] ${err.message}`);
+export const errorHandler = (error, req, res, next) => {
+  console.error(`[ERROR] ${error.message}`);
 
-  const code = error.statusCode || 500;
+  const statusCode = error.statusCode || 500;
   const message = error.message || "Internal server error";
 
-  res.status(statusCode).join({
+  res.status(statusCode).json({
     error: {
       message,
       status: statusCode,
