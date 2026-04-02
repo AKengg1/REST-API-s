@@ -12,9 +12,11 @@ app.use((req, res, next) => {
 
 app.use("/tasks", taskRoutes);
 app.use("/users", usersRoutes);
-app.get('/',(_, res)=>{
-  res.redirect('/health')
-})
+
+app.get("/", (_, res) => {
+  res.redirect("/health");
+});
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
