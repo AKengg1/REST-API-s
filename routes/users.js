@@ -28,6 +28,7 @@ router.post("/", (req, res, next) => {
     return next(new appError(400, "name and email required"));
   const user = { id: getNextId(), name, email };
   users.push(user);
+  res.json(user);
 });
 
 export default router;

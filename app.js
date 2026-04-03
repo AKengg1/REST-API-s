@@ -13,21 +13,21 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/tasks", taskRoutes);
-app.use("/users", usersRoutes);
+app.use("/app/tasks", taskRoutes);
+app.use("/app/users", usersRoutes);
 
 app.get("/", (_, res) => {
-  res.redirect("/health");
+  res.redirect("/app");
 });
 
-app.get("/health", (req, res) => {
+app.get("/app", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.use((req, res, next)=>{
-   next(new appError(404,`Route ${req.url} not found`))
-})
+app.use((req, res, next) => {
+  next(new appError(404, `Route ${req.url} not found`));
+});
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 export default app;

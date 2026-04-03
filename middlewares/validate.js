@@ -5,7 +5,7 @@ export const validateFields = (fields) => {
     const missing = fields.filter((e) => !req.body[e]);
     if (missing.length > 0)
       return next(
-        new appError(400,`Missing required fields: ${missing.join(", ")}`),
+        new appError(400, `Missing required fields: ${missing.join(", ")}`),
       );
 
     next();
