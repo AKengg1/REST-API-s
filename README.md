@@ -93,7 +93,7 @@ Server runs at `http://localhost:3000`
 | Method | Route | Description |
 |--------|-------|-------------|
 | GET | `/` | API info |
-| GET | `/health` | Server status |
+| GET | `/app` | Server status |
 
 ## Example requests (PowerShell)
 
